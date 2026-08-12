@@ -17,15 +17,17 @@ models:
           description: Primary key for orders.
           tests:
             - relationships:
-                to: ref('stg_customers')
-                field: customer_id
+                arguments:
+                  to: ref('stg_customers')
+                  field: customer_id
         - name: status
           description: '{{ doc("order_status") }}'
           tests:
             - accepted_values:
-                values:
-                  - completed
-                  - shipped
-                  - returned
-                  - placed
-                  - return_pending
+                arguments:
+                  values:
+                    - completed
+                    - shipped
+                    - returned
+                    - placed
+                    - return_pending
