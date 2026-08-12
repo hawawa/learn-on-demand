@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: "Order-level fact model containing customer details, order dates, and total successful payment amounts."
+    columns:
+      - name: order_id
+        description: "Primary key for each order."
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_id
+        description: "Foreign key referencing the customer who placed the order."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+
+      - name: order_date
+        description: "Date when the order was placed."
+
+      - name: amount
+        description: "Total amount of successful payments for the order, defaulted to 0 if unpaid."
+        tests:
+          - not_null
+        data_tests:
+          - average_dollars_spent_greater_than_one
