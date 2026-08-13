@@ -42,3 +42,6 @@ models:
           unique: 1
           not_null: 1
           relationships: 1
+dispatch:
+  - macro_namespace: audit_helper
+    search_order: ['audit_helper', 'dbt']

@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Customer dimension table combining customer profile data with aggregated order history and lifetime value."
+    columns:
+      - name: customer_id
+        description: "Primary key identifying each unique customer."
+        data_tests:
+          - unique
+          - not_null
+          - dbt_utils.cardinality_equality:
+              arguments:
+                field: customer_id
+                to: ref('stg_customers')
+
+      - name: first_name
+        description: "Customer's first name."
+
+      - name: last_name
+        description: "Customer's last name."
+
+      - name: first_order_date
+        description: "Date of the customer's earliest order."
+
+      - name: most_recent_order_date
+        description: "Date of the customer's most recent order."
+
+      - name: number_of_orders
+        description: "Total count of orders placed by the customer, defaulting to 0 for customers with no orders."
+        data_tests:
+          - not_null
+
+      - name: lifetime_value
+        description: "Total revenue generated from the customer across all orders."

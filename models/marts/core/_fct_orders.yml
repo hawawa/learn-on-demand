@@ -6,26 +6,36 @@ models:
     columns:
       - name: order_id
         description: "Primary key for each order."
-        tests:
+        data_tests:
           - unique
           - not_null
 
       - name: customer_id
         description: "Foreign key referencing the customer who placed the order."
-        tests:
+        data_tests:
           - not_null
           - relationships:
-              to: ref('stg_customers')
-              field: customer_id
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
 
       - name: order_date
         description: "Date when the order was placed."
 
       - name: amount
         description: "Total amount of successful payments for the order, defaulted to 0 if unpaid."
-        tests:
-          - not_null
         data_tests:
-          - average_dollars_spent_greater_than_one
-            arguments:
-              group_by_column: customer_id
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              arguments:
+                min_value: 0
+                row_condition: "order_id is not null"
+                strictly: false
+          - dbt_expectations.expect_column_mean_to_be_between:
+              arguments:
+                min_value: 1
+                row_condition: "order_id is not null"
+                strictly: false
+          - average_dollars_spent_greater_than_one:
+              arguments:
+                group_by_column: customer_id
