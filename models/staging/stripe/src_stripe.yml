@@ -1,7 +1,30 @@
 version: 2
 
 sources:
-    - name: stripe
-      database: raw
-      tables:
-        - name: payment
+  - name: stripe
+    database: raw
+    tables:
+      - name: payment
+        columns:
+          - name: id
+            data_tests:
+              - unique:
+                  config:
+                    severity: error
+                    error_if: ">100"
+                    warn_if: ">10"
+
+          - name: paymentmethod
+            data_tests:
+              - not_null:
+                  config:
+                    where: "status = 'success'"
+
+          - name: status
+            data_tests:
+              - accepted_values:
+                  arguments:
+                    values: ['success', 'fail']
+                  config:
+                    limit: 10
+                    store_failures: true
