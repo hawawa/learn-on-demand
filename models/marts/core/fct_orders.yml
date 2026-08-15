@@ -1,0 +1,12 @@
+exposures:
+  - name: jaffle_shop_weekly_metrics
+    label: Jaffle Shop Weekly Metrics
+    description: Weekly order Metrics for Jaffle Shop
+    depends_on:
+      - ref('fct_orders')
+    owner:
+      name: Jenna B
+      email: jenna.bushspies@dbtlabs.com
+    type: dashboard
+    maturity: high
+    url: https://dbtlabs.omniapp.co/dashboards/b79e0ddc
