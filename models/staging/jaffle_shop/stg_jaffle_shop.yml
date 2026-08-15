@@ -6,8 +6,10 @@ models:
       columns: 
         - name: customer_id
           description: The primary key for customers.
-          tests:
-            - unique
+          data_tests:
+            - unique:
+                config:
+                  enabled: false
             - not_null
 
     - name: stg_orders

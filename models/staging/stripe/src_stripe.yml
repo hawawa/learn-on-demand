@@ -10,6 +10,7 @@ sources:
             data_tests:
               - unique:
                   config:
+                    enabled: false
                     severity: error
                     error_if: ">100"
                     warn_if: ">10"

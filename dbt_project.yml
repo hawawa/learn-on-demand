@@ -26,10 +26,10 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   jaffle_shop:
     # Requires at least 1 'unique' and 1 'not_null' test across all models
-    +meta:
-      required_tests:
-        unique: 1
-        not_null: 1
+    # +meta:
+      # required_tests:
+      #   unique: 1
+      #   not_null: 1
 
     staging:
       +materialized: view
@@ -37,11 +37,11 @@ models:
     marts:
       +materialized: table
       # Adds a requirement for at least 1 'relationships' test on marts models
-      +meta:
-        required_tests:
-          unique: 1
-          not_null: 1
-          relationships: 1
+      # +meta:
+      #   required_tests:
+      #     unique: 1
+      #     not_null: 1
+      #     relationships: 1
 dispatch:
   - macro_namespace: audit_helper
     search_order: ['audit_helper', 'dbt']

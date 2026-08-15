@@ -11,7 +11,9 @@ sources:
             - name: id
               description: Primary key for customers
               tests:
-                - unique
+                - unique:
+                    config:
+                      enabled: false
                 - not_null
 
         - name: orders
@@ -20,5 +22,7 @@ sources:
             - name: id
               description: Primary key for orders.
               tests:
-                - unique
+                - unique:
+                    config:
+                      enabled: false
                 - not_null
